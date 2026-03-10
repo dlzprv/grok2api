@@ -3,7 +3,7 @@
 # 应用访问地址（用于生成文件链接）
 app_url = ""
 # 后台管理密码
-app_key = "grok2api"
+app_key = "123789@ZxcBnm"
 # API 调用密钥（可选，支持列表）
 api_key = ""
 # 是否启用 function 功能玩法

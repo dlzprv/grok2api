@@ -374,9 +374,11 @@ class RedisStorage(BaseStorage):
                     composite_key = f"{section}.{key}"
                     mapping[composite_key] = json_dumps(val)
 
-            await self.redis.delete(self.config_key)
-            if mapping:
-                await self.redis.hset(self.config_key, mapping=mapping)
+            async with self.redis.pipeline(transaction=True) as pipe:
+                pipe.delete(self.config_key)
+                if mapping:
+                    pipe.hset(self.config_key, mapping=mapping)
+                await pipe.execute()
         except Exception as e:
             logger.error(f"RedisStorage: 保存配置失败: {e}")
             raise
